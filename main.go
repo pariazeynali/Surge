@@ -10,7 +10,6 @@ import (
 func httpHandler() {
 	http.HandleFunc("/get-price-coefficient", GetCoefficient)
 	log.Fatal(http.ListenAndServe(":8080", nil))
-
 }
 
 func writeOSMData() {
