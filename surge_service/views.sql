@@ -1,3 +1,23 @@
+create table ride_request (
+                              req_timestamp   timestamptz primary key default clock_timestamp()
+    , geom            geometry(Point,3857) not null
+) ;
+
+create table coefficient_t (
+                               req_threshold       int4range
+    , price_coefficient   float
+);
+
+insert into coefficient_t
+(req_threshold, price_coefficient)
+values
+('[0, 1000)', 1.00)
+     ,('[1000, 3000)', 1.05)
+     ,('[3000, 5000)', 1.10)
+     ,('[5000, 10000)', 1.20)
+     ,('[10000, 25000)', 2.00)
+     ,('[25000, 50000)', 3.00);
+
 create or replace view tehran as(
     with tehran_city as (
         select * from planet_osm_polygon
