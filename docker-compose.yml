@@ -10,6 +10,18 @@ services:
     ports:
       - '5432:5432'
 
+  osm2pgsql:
+    restart: unless-stopped
+    image: postgis/postgis:latest
+    command: "sh /app/run.sh"
+    environment:
+      PGPASSWORD: $OSM_PASS
+      OSM_USER: $OSM_USER
+      OSM_DB: $OSM_DB
+      OSM_HOST: $OSM_HOST
+      STYLE_FILE: $STYLE_FILE
+      OSM_PBD_FILE: $OSM_PBD_FILE
+
   surge_service :
     restart: unless-stopped
     build: ./surge_service
