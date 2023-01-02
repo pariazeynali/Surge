@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"surge/gis_helper"
+	"surge_service/gis_helper"
 )
 
 type Response struct {

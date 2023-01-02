@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
-	"surge/gis_helper"
+	"surge_service/gis_helper"
 	"time"
 )
 
