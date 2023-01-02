@@ -28,5 +28,9 @@ func GetPriceCoefficient(latitude string, longitude string) float32 {
 	if err = tx.QueryRow(ctx, query, reqCount).Scan(&coefficient); err != nil {
 		log.Panicf("Error getting price coefficient: %v", err)
 	}
+	err = tx.Commit(context.TODO())
+	if err != nil {
+		log.Printf("Error Commiting transaction %v", err)
+	}
 	return coefficient
 }

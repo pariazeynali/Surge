@@ -46,5 +46,4 @@ func SaveRideRequest(w http.ResponseWriter, r *http.Request) {
 		log.Printf("ERROR: while saving ride request data: %v", err)
 	}
 	w.WriteHeader(http.StatusCreated)
-
 }

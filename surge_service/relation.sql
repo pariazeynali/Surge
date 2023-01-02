@@ -1,9 +1,9 @@
-create table if not exists ride_request (
+create table if not exists ride_request_t (
                               req_timestamp   timestamptz primary key default clock_timestamp()
     , geom            geometry(Point,3857) not null
 ) ;
 
-create table is not exists coefficient_t (
+create table if not exists coefficient_t (
                                req_threshold       int4range
     , price_coefficient   float
 );

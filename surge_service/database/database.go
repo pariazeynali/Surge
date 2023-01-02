@@ -26,15 +26,18 @@ func ConnectToDb() {
 }
 
 func CreateDBRelations() {
-	sql, err := os.ReadFile("./views.sql")
+	sql, err := os.ReadFile("./relation.sql")
 	if err != nil {
 		log.Fatalf("ERROR reading SQl files: %v", err)
 	}
 	sqlQ := string(sql)
-	c, _ := Conn.Acquire(context.Background())
+	c, err := Conn.Acquire(context.Background())
+	if err != nil {
+		log.Panicf("ERROR accuring connection: %v", err)
+	}
 	defer c.Release()
 	_, err = c.Exec(context.Background(), sqlQ)
 	if err != nil {
-		log.Fatalf("ERROR could not create views: %v", err)
+		log.Fatalf("ERROR could not create relatiosn: %v", err)
 	}
 }
