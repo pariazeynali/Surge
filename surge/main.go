@@ -9,6 +9,7 @@ import (
 
 func httpHandler() {
 	http.HandleFunc("/get-price-coefficient", GetCoefficient)
+	http.HandleFunc("/ride-request", SaveRideRequest)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
@@ -23,6 +24,7 @@ func writeOSMData() {
 
 func main() {
 	gis_helper.ConnectToDb()
+	gis_helper.CreateDBViews()
 	go writeOSMData()
 	httpHandler()
 }

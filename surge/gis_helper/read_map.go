@@ -9,18 +9,18 @@ import (
 )
 
 // Db connection pool
-var conn *pgxpool.Pool
+var Conn *pgxpool.Pool
 
 func ConnectToDb() {
 	dbUser := os.Getenv("OSM_USER")
-	dbPass := os.Getenv("PGPASSWORD")
+	dbPass := os.Getenv("OSM_PASS")
 	dbName := os.Getenv("OSM_DB")
 	dbHost := os.Getenv("OSM_HOST")
 	dbPort := os.Getenv("OSM_PORT")
 
 	connStr := fmt.Sprintf("user=%v password=%v host=%v port=%v dbname=%v pool_max_conns=50", dbUser, dbPass, dbHost, dbPort, dbName)
 	var err error
-	conn, err = pgxpool.New(context.Background(), connStr)
+	Conn, err = pgxpool.New(context.Background(), connStr)
 	if err != nil {
 		log.Fatalf("error connecting to database: %v", err)
 	}
@@ -28,19 +28,19 @@ func ConnectToDb() {
 
 // SaveReqData Save req source address coordinates and request timestamp in database
 func SaveReqData(latitude string, longitude string) error {
-	_, err := conn.Exec(context.Background(), "insert into ride_request (geom) values (ST_Point($1, $2, 3857))", latitude, longitude)
+	_, err := Conn.Exec(context.Background(), "insert into ride_request (geom) values (ST_Point($1, $2, 3857))", latitude, longitude)
 	return err
 }
 
 // GetPriceCoefficient gets source coordinates and returns price coefficient of the area
 func GetPriceCoefficient(latitude string, longitude string) float32 {
 	ctx := context.Background()
-	tx, err := conn.Begin(ctx)
+	tx, err := Conn.Begin(ctx)
 	if err != nil {
 		log.Panicf("could not start transaction: %v", err)
 	}
 	defer tx.Commit(ctx)
-	query := "select tc.osm_id from queries.tehran tc where ST_Contains(tc.way, ST_POINT($1::float, $2::float, 3857))"
+	query := "select tc.osm_id from tehran tc where ST_Contains(tc.way, ST_POINT($1::float, $2::float, 3857))"
 	var polygonOSMId int
 	if err = tx.QueryRow(ctx, query, latitude, longitude).Scan(&polygonOSMId); err != nil {
 		log.Panicf("Error reading source polygon: %v", err)
