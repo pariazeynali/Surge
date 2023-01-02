@@ -18,7 +18,7 @@ values
      ,('[10000, 25000)', 2.00)
      ,('[25000, 50000)', 3.00);
 
-create or replace view tehran as(
+create or replace view tehran_v as(
     with tehran_city as (
         select * from planet_osm_polygon
         where osm_id = -6663864
@@ -30,7 +30,7 @@ create or replace view tehran as(
     inner join tehran_city tc on ST_Contains(tc.way, cp.way)
 );
 
-create or replace view ride_req_statistics as
+create or replace view ride_req_statistics_v as
 with ride_req_last_10_mins as (
     select * from ride_request
     where req_timestamp between now() - interval '10 minutes' and now()

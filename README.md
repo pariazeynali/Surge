@@ -15,14 +15,14 @@ But this method will delete the database relations. <br>
 To handle this problem there are ways to update data such as using osm diffs.
 
 **Views:**<br>
-**tehran_v** : This view returns the information of municipality districts of Tehran city.<br>
-**ride_req_statistic_v**: Views ride request count in every municipality districts.
+* **tehran_v** : This view returns the information of municipality districts of Tehran city.<br>
+* **ride_req_statistic_v**: Views ride request count in every municipality districts.
 
 **Tables:**<br>
-**ride_requests_t**: To simulating ride requests data there is dummy data in this table.<br>
-**coefficient_t**: To configure Thresholds/Coefficients relation.
+* **ride_requests_t**: To simulating ride requests data there is dummy data in this table.<br>
+* **coefficient_t**: To configure Thresholds/Coefficients relation.
 
 **APIs:**<br>
-**/get-price-coefficient** : Calls on every ride request and get latitude and longitude of source address and returns price coefficient of the area. <br>
-**/ride-request** : To simulate ride request call /ride-request api to insert ride request data into database.
+* **/get-price-coefficient** : Calls on every ride request and get latitude and longitude of source address and returns price coefficient of the area. <br>
+* **/ride-request** : To simulate ride request call /ride-request api to insert ride request data into database.
 
