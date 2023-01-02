@@ -11,7 +11,7 @@ import (
 // UpdateOSMData Removes old .osm.pbf file and download Irans's osm data
 func UpdateOSMData() {
 	osmFileName := os.Getenv("OSM_PBF_FILE")
-	osmURL := os.Getenv("OSM_HOST")
+	osmURL := os.Getenv("OSM_PBF_URL")
 	if err := os.Remove(osmFileName); err != nil {
 		log.Panicf("ERROR: flailed to remove osm.pbf file %v\n")
 	}
