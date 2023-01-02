@@ -1,0 +1,26 @@
+version: 3
+services:
+  postgis:
+    restart: unless-stopped
+    image: postgis/postgis:latest
+    environment:
+      POSTGRES_PASSWORD: $OSM_PASS
+      POSTGRES_USER: $OSM_USER
+      POSTGRES_DB: $OSM_DB
+    ports:
+      - '5432:5432'
+
+  surge_service :
+    restart: unless-stopped
+    build: ./surge_service
+    volumes:
+      - ./surge_service:/app
+    environment:
+      OSM_USER: $OSM_USER
+      OSM_PASS: $OSM_PASS
+      OSM_DB: $OSM_DB
+      OSM_HOST: $OSM_HOST
+      OSM_PORT: $OSM_PORT
+    ports:
+      - '8080:8080'
+
