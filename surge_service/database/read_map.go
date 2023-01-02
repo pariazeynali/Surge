@@ -1,36 +1,9 @@
-package gis_helper
+package database
 
 import (
 	"context"
-	"fmt"
-	"github.com/jackc/pgx/v5/pgxpool"
 	"log"
-	"os"
 )
-
-// Db connection pool
-var Conn *pgxpool.Pool
-
-func ConnectToDb() {
-	dbUser := os.Getenv("OSM_USER")
-	dbPass := os.Getenv("OSM_PASS")
-	dbName := os.Getenv("OSM_DB")
-	dbHost := os.Getenv("OSM_HOST")
-	dbPort := os.Getenv("OSM_PORT")
-
-	connStr := fmt.Sprintf("user=%v password=%v host=%v port=%v dbname=%v pool_max_conns=50", dbUser, dbPass, dbHost, dbPort, dbName)
-	var err error
-	Conn, err = pgxpool.New(context.Background(), connStr)
-	if err != nil {
-		log.Fatalf("error connecting to database: %v", err)
-	}
-}
-
-// SaveReqData Save req source address coordinates and request timestamp in database
-func SaveReqData(latitude string, longitude string) error {
-	_, err := Conn.Exec(context.Background(), "insert into ride_request (geom) values (ST_Point($1, $2, 3857))", latitude, longitude)
-	return err
-}
 
 // GetPriceCoefficient gets source coordinates and returns price coefficient of the area
 func GetPriceCoefficient(latitude string, longitude string) float32 {

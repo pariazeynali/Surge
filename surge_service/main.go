@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
-	"surge_service/gis_helper"
+	"surge_service/database"
 	"time"
 )
 
@@ -17,14 +17,14 @@ func writeOSMData() {
 	ticker := time.NewTicker(12 * time.Hour)
 	select {
 	case <-ticker.C:
-		gis_helper.UpdateOSMData()
-		gis_helper.SaveOSMToDB()
+		database.UpdateOSMData()
+		database.SaveOSMToDB()
 	}
 }
 
 func main() {
-	gis_helper.ConnectToDb()
-	gis_helper.CreateDBViews()
+	database.ConnectToDb()
+	database.CreateDBRelations()
 	go writeOSMData()
 	httpHandler()
 }

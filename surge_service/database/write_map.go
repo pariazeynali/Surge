@@ -1,4 +1,4 @@
-package gis_helper
+package database
 
 import (
 	"io"

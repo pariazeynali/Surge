@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"surge_service/gis_helper"
+	"surge_service/database"
 )
 
 type Response struct {
@@ -21,7 +21,7 @@ func GetCoefficient(w http.ResponseWriter, r *http.Request) {
 	latitude := r.URL.Query().Get("latitude")
 	longitude := r.URL.Query().Get("longitude")
 	log.Printf("latidtude: %v, longitude %v", latitude, longitude)
-	coefficient := gis_helper.GetPriceCoefficient(latitude, longitude)
+	coefficient := database.GetPriceCoefficient(latitude, longitude)
 	res = Response{Status: 200, Result: fmt.Sprintf("%v", coefficient)}
 	jsonRes, err := json.Marshal(res)
 	if err != nil {
@@ -41,7 +41,7 @@ func SaveRideRequest(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 	latitude := r.URL.Query().Get("latitude")
 	longitude := r.URL.Query().Get("longitude")
-	if err := gis_helper.SaveReqData(latitude, longitude); err != nil {
+	if err := database.SaveReqData(latitude, longitude); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Printf("ERROR: while saving ride request data: %v", err)
 	}
