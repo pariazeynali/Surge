@@ -26,3 +26,5 @@ To handle this problem there are ways to update data such as using osm diffs.
 * **/get-price-coefficient** : Calls on every ride request and get latitude and longitude of source address and returns price coefficient of the area. <br>
 * **/ride-request** : To simulate ride request call /ride-request api to insert ride request data into database.
 
+**Use following command to build project :**
+    docker-compose up -d --build
